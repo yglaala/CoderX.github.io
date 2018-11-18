@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.MenuDao">
+
+    <resultMap id="MenuMap" type="Menu">
+        <id property="menuId" column="menu_id"></id>
+        <result property="menuNo" column="menu_no"></result>
+        <result property="menuPrice" column="menu_price"></result>
+        <result property="menuName" column="menu_name"></result>
+        <result property="menuPicPath" column="menu_pic_path"></result>
+
+        <association property="menuPropertiesStyle" column="menu_properties_style_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesStyleDao.findById"></association>
+        <association property="menuPropertiesCategory" column="menu_properties_category_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesCategoryDao.findById"></association>
+        <association property="menuPropertiesTaste" column="menu_properties_taste_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesTasteDao.findById"></association>
+        <association property="shop" column="shop_id" select="com.bmsoft.canteensystem.dao.ShopDao.findById"></association>
+
+    </resultMap>
+
+
+    <select id="findByMenuName" parameterType="Map" resultMap="MenuMap">
+        SELECT * from tb_menu m,tb_shop s WHERE m.menu_name LIKE #{menuName} AND m.shop_id=s.shop_id AND s.user_id=#{userId}
+    </select>
+
+    <select id="findByMenuName1" parameterType="Map" resultMap="MenuMap">
+        SELECT  * FROM tb_menu WHERE menu_name=#{menuName} AND menu_id != #{menuId} AND shop_id=#{shopId}
+    </select>
+
+    <select id="findByName" parameterType="Map" resultMap="MenuMap">
+         SELECT * from tb_menu m,tb_shop s WHERE m.menu_name = #{menuName} AND m.shop_id=s.shop_id AND s.user_id=#{userId}
+    </select>
+
+    <select id="findByMenuNo" parameterType="map" resultMap="MenuMap">
+        select * from tb_menu m,tb_shop s where menu_no=#{menuNo} AND m.shop_id=s.shop_id AND s.user_id=#{userId}
+    </select>
+
+    <select id="findAll"  parameterType="Map" resultMap="MenuMap">
+         SELECT * from tb_menu m,tb_shop s WHERE m.shop_id=s.shop_id AND s.user_id=#{userId}
+    </select>
+
+    <select id="findByShopId" parameterType="Integer" resultMap="MenuMap">
+        select * from tb_menu  where shop_id=#{shopId}
+    </select>
+
+
+    <select id="getShopId" parameterType="Integer" resultMap="MenuMap">
+        SELECT shop_id from tb_shop where user_id=#{userId}
+    </select>
+
+    <select id="fuzzySearchByName" parameterType="String" resultMap="MenuMap">
+         SELECT * from tb_menu  WHERE menu_name LIKE #{menuName}
+    </select>
+
+    <select id="findById" parameterType="Integer" resultMap="MenuMap">
+      SELECT m.*,s.shop_name from tb_menu m,tb_shop s WHERE m.shop_id=s.shop_id AND menu_id=#{menuId}
+    </select>
+
+    <select id="findAllMenuInfo" resultMap="MenuMap">
+        SELECT * from tb_menu
+    </select>
+    <insert id="add" parameterType="Menu" >
+      INSERT INTO tb_menu (menu_no,menu_price,menu_name,menu_pic_path,menu_properties_style_id,menu_properties_category_id,menu_properties_taste_id,shop_id)
+      VALUES (#{menuNo},#{menuPrice},#{menuName},#{menuPicPath},
+      #{menuPropertiesStyle.menuPropertiesStyleId},#{menuPropertiesCategory.menuPropertiesCategoryId},#{menuPropertiesTaste.menuPropertiesTasteId},#{shop.shopId})
+    </insert>
+
+    <update id="update" parameterType="Menu" >
+        UPDATE tb_menu
+        <set>
+            <if test="menuNo!=null and menuNo!=''">
+                menu_no=#{menuNo},
+            </if>
+            <if test="menuName!=null and menuName!=''">
+                menu_name=#{menuName},
+            </if>
+            <if test="menuPicPath!=null and menuPicPath!=''">
+                menu_pic_path=#{menuPicPath},
+            </if>
+            <if test="menuPrice!=null and menuPrice!=''">
+                menu_price=#{menuPrice},
+            </if>
+            <if test="menuPropertiesCategory != null">
+                  menu_properties_category_id=#{menuPropertiesCategory.menuPropertiesCategoryId},
+            </if>
+            <if test="menuPropertiesStyle != null">
+                menu_properties_style_id=#{menuPropertiesStyle.menuPropertiesStyleId},
+            </if>
+            <if test="menuPropertiesTaste != null">
+                menu_properties_taste_id=#{menuPropertiesTaste.menuPropertiesTasteId},
+            </if>
+            <if test="shop != null">
+                shop_id=#{shop.shopId},
+            </if>
+
+        </set>
+        where menu_id=#{menuId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        DELETE   FROM  tb_menu WHERE  menu_id=#{menu_id}
+    </delete>
+
+
+    <select id="findAllByMenuPropertiesCategoryId" parameterType="Integer" resultMap="MenuMap">
+        SELECT * from tb_menu WHERE menu_properties_category_id=#{menuPropertiesCategoryId}
+    </select>
+
+    <select id="findAllByMenuPropertiesStyleId" parameterType="Integer" resultMap="MenuMap">
+        SELECT * from tb_menu WHERE menu_properties_style_id=#{menuPropertiesStyleId}
+    </select>
+
+    <select id="findAllByMenuPropertiesTasteId" parameterType="Integer" resultMap="MenuMap">
+        SELECT * from tb_menu WHERE menu_properties_taste_id=#{menuPropertiesTasteId}
+    </select>
+</mapper>
+ 
+

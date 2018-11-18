@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.ShopDao">
+    <resultMap id="shopMap" type="Shop">
+        <result property="shopId" column="shop_id"/>
+        <result property="shopName" column="shop_name"/>
+        <result property="shopMorning" column="shop_morning"/>
+        <result property="shopNoon" column="shop_noon"/>
+        <result property="shopEvening" column="shop_evening"/>
+        <association property="user" column="user_id" select="com.bmsoft.canteensystem.dao.UserDao.findById"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="shopMap">
+        SELECT * FROM tb_shop WHERE shop_id=#{shopId}
+    </select>
+</mapper>
+
+

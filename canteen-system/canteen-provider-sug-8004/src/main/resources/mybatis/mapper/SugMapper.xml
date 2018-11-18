@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.SugDao">
+    <resultMap id="sugMap" type="Sug">
+        <result property="sugId" column="sug_id"/>
+        <result property="sugContent" column="sug_content"/>
+        <result property="sugCreateDate" column="sug_create_date"/>
+        <result property="sugType" column="sug_type"/>
+        <result property="userId" column="user_id"/>
+        <!--<association property="user" column="user_id" select="com.bmsoft.canteensystem.dao.CommonDao.findByUserId"></association>-->
+    </resultMap>
+
+    <select id="find" parameterType="Sug" resultMap="sugMap">
+        SELECT * FROM tb_sug
+        <where>
+            <if test="sugType!=null and sugType!=''">
+                AND sug_type like CONCAT('%',#{sugType},'%')
+            </if>
+        </where>
+        ORDER BY sug_create_date DESC
+    </select>
+    <select id="getCount" parameterType="Sug" resultType="Integer">
+        SELECT COUNT(*) FROM tb_sug
+        <where>
+            <if test="sugType!=null and sugType!=''">
+                AND sug_type like CONCAT('%',#{sugType},'%')
+            </if>
+        </where>
+        ORDER BY sug_create_date DESC
+    </select>
+
+    <insert id="add" parameterType="Sug">
+        INSERT INTO tb_sug (user_id,sug_content,sug_create_date,sug_type) VALUES (#{userId},#{sugContent},NOW(),#{sugType})
+    </insert>
+
+</mapper>
+
+

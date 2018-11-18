@@ -1,0 +1,42 @@
+server:
+  port: 8004
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml   # mybatis配置文件所在路径
+  type-aliases-package: com.bmsoft.canteensystem.entity   # 所有Entity别名类所在包
+  mapper-locations:
+  - classpath:mybatis/mapper/**/*.xml                  # mapper映射文件
+spring:
+  application:
+    name: sug-provider                        # 很重要,微服务的唯一标识
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver         # mysql驱动包
+    type: com.alibaba.druid.pool.DruidDataSource        # 当前数据源操作类
+    url: jdbc:mysql://132.232.137.183:3306/canteen?useUnicode=true&characterEncoding=utf8          # 数据库名称
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5                                       # 数据库连接池的最小维持连接数
+      initial-size: 5                                   # 数据库连接池的最小维持连接数
+      max-idle: 5                                       # 最大连接数
+      max-wait-millis: 200                              # 等待连接获取的最大超时时间
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://132.232.137.183:8001/eureka  #单机版
+  instance:
+    instance-id: sug-provider-8004  #自定义服务名称信息
+    prefer-ip-address: true #访问路径可以显示ip地址
+    ip-address: 132.232.137.183
+
+info:
+  app.name: 食堂系统项目
+  company.name: 北明软件有限公司
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

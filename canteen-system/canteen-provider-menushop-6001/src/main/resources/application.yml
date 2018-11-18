@@ -1,0 +1,62 @@
+server:
+  port: 6001
+  
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.bmsoft.canteensystem.entity   # 所有Entity别名类所在包
+  mapper-locations:
+  - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
+    
+spring:
+   application:
+    name: shop-menu-provider
+   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://132.232.137.183:3306/canteen?useUnicode=true&characterEncoding=utf8                # 数据库名称
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+   redis:
+     database: 0
+     host: 132.232.187.203
+     port: 6379
+     password: 123456
+# 连接池最大连接数
+     pool:
+       max-active: 8
+       max-wait: -1
+# 连接池中的最大空闲连接
+       max-idle: 8
+# 连接池中的最小空闲连接
+       min-idle: 0
+# 连接超时时间（毫秒）
+     timeout: 0
+
+   session:
+     store-type: redis
+
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+     #defaultZone: http://localhost:7001/eureka
+      #defaultZone: http://eureka8001.com:8001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+       defaultZone: http://132.232.137.183:8001/eureka/
+  instance:
+    instance-id: shop-menu-provider-6001   #自定义服务名称
+    prefer-ip-address: true #访问路径可以显示IP地址
+    ip-address: 129.28.68.234 #绑定ip
+
+
+
+#pagehelper分页插件配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

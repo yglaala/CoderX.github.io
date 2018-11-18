@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.MenuPropertiesStyleDao">
+    <resultMap id="menuPropertiesStyleMap" type="MenuPropertiesStyle">
+        <result property="menuPropertiesStyleId" column="menu_properties_style_id"/>
+        <result property="menuPropertiesStyleName" column="menu_properties_style_name"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="menuPropertiesStyleMap">
+        SELECT * FROM tb_menu_properties_style WHERE menu_properties_style_id=#{menuPropertiesStyleId}
+    </select>
+
+</mapper>
+
+

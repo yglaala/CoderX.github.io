@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.ShopDao">
+
+    <resultMap id="ShopMap" type="shop">
+        <id property="shopId" column="shop_id"></id>
+        <result property="shopName" column="shop_name"></result>
+        <result property="shopMorning" column="shop_morning"></result>
+        <result property="shopNoon" column="shop_noon"></result>
+        <result property="shopEvening" column="shop_evening"></result>
+        <collection property="menu" column="shop_id"  javaType="ArrayList" ofType="com.bmsoft.canteensystem.entity.Menu" select="com.bmsoft.canteensystem.dao.MenuDao.findByShopId">
+            <id property="menuId" column="menu_id"></id>
+            <result property="menuNo" column="menu_no"></result>
+            <result property="menuPrice" column="menu_price"></result>
+            <result property="menuName" column="menu_name"></result>
+            <result property="menuPicPath" column="menu_pic_path"></result>
+
+
+            <!--<association property="menuPropertiesCategory" column="menu_properties_category_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesCategoryDao.findById"></association>
+            <association property="menuPropertiesStyle" column="menu_properties_style_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesStyleDao.findById"></association>
+            <association property="menuPropertiesTaste" column="menu_properties_taste_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesTasteDao.findById"></association>-->
+        </collection>
+    </resultMap>
+
+    <resultMap id="ShopMap1" type="Shop">
+            <id property="shopId" column="shop_id"></id>
+            <result property="shopName" column="shop_name"></result>
+            <result property="shopMorning" column="shop_morning"></result>
+            <result property="shopNoon" column="shop_noon"></result>
+            <result property="shopEvening" column="shop_evening"></result>
+            <association property="user" column="user_id" select="com.bmsoft.canteensystem.dao.UserDao.findById"></association>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="ShopMap1">
+        select * from tb_shop  where shop_id=#{shopId}
+    </select>
+
+    <select id="findByShopName" parameterType="String" resultMap="ShopMap1">
+        SELECT  * FROM  tb_shop WHERE  shop_name=#{shopName}
+    </select>
+
+    <select id="findByUserId" parameterType="Integer" resultMap="ShopMap1">
+         select * from tb_shop  where user_id=#{userId}
+    </select>
+
+    <select id="findByShopUserId" parameterType="Map" resultMap="ShopMap1">
+        select * from tb_shop where user_id!=#{userId} AND shop_name=#{shopName}
+    </select>
+
+    <update id="update" parameterType="Shop">
+        update tb_shop
+        <set>
+            <if test="shopName!=null and shopName!=''">
+                shop_name=#{shopName},
+            </if>
+            <if test="shopMorning!=null and shopMorning!=''">
+                shop_Morning=#{shopMorning},
+            </if>
+            <if test="shopNoon!=null and shopNoon!=''">
+                shop_noon=#{shopNoon},
+            </if>
+            <if test="shopEvening!=null and shopEvening!=''">
+                shop_evening=#{shopEvening},
+            </if>
+        </set>
+        WHERE  shop_id=#{shopId}
+    </update>
+
+    <insert id="add" parameterType="Shop">
+        INSERT  INTO  tb_shop VALUE(null,#{shopName},#{shopMorning},#{shopNoon},#{shopEvening},#{user.userId})
+    </insert>
+
+    <select id="searchByMenuId" parameterType="Integer" resultMap="ShopMap1">
+        SELECT s.* from tb_menu m,tb_shop s where m.shop_id = s.shop_id AND m.menu_id=#{menuId}
+    </select>
+</mapper>
+ 
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.MenuSugDao">
+
+    <resultMap id="MenuSugMap" type="MenuSug">
+        <id property="menuSugId" column="menu_sug_id"></id>
+        <result property="sugContent" column="sug_content"></result>
+        <result property="menuRating" column="menu_rating"></result>
+        <result property="menuSugCreateDate" column="menu_sug_create_date"></result>
+        <association property="user" column="user_id" select="com.bmsoft.canteensystem.dao.UserDao.findById"></association>
+    </resultMap>
+
+        <select id="findByMenuId" parameterType="Integer" resultMap="MenuSugMap">
+          SELECT * from tb_menu_sug WHERE menu_id=#{menuId}
+        </select>
+
+</mapper>
+ 
+

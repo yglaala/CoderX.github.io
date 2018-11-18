@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.MatchMenuDao">
+    <resultMap id="matchMenuMap" type="MatchMenu">
+        <result property="matchMenuId" column="match_menu_id"/>
+        <result property="matchMenuDate" column="match_menu_date"/>
+        <result property="matchMenuTime" column="match_menu_time"/>
+        <result property="matchMenuNum" column="match_menu_num"/>
+        <association property="menu" column="menu_id" select="com.bmsoft.canteensystem.dao.MenuDao.findById"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="matchMenuMap">
+        SELECT * FROM tb_match_menu WHERE match_menu_id=#{matchMenuId} ORDER BY match_menu_date ASC,match_menu_time ASC
+    </select>
+</mapper>
+
+

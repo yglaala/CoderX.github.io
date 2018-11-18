@@ -1,0 +1,58 @@
+server:
+  port: 9002
+  max-http-header-size: 8000000
+  jetty:
+    max-http-post-size: 8000000
+mybatis:
+  #config-location: classpath:mybatis/mybatis.cfg.mybatis               #mybatis配置文件所在路径
+  #type-aliases-package: com.bmsoft.canteensystem.entity             #所有Entity别名所在包
+  configuration:
+    map-underscore-to-camel-case: true                             #驼峰命名规则开启
+  #mapper-locations:
+  #- classpath:mybatis/mapper/**/*.mybatis                                #mapper映射文件
+spring:
+  application:
+    name: collocationofdishes-provider
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource                    #当前操作源数据类型
+    driver-class-name: com.mysql.jdbc.Driver                   #mysql驱动包
+    url: jdbc:mysql://132.232.137.183:3306/canteen?useUnicode=true&characterEncoding=utf8                      #数据库名称
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5                                                   #数据库链接池最小维持链接数
+      initial-size: 5                                              #初始化链接数
+      max-total: 5                                                  #最大链接数
+      max-wait-millis: 200                                         #等待链接获取的最大超时时间
+
+
+  redis:
+    database: 0
+    host: 132.232.187.203
+    port: 6379
+    password: 123456
+    pool:
+      max-active: 8                                              # 连接池最大连接数
+      max-wait: -1
+      max-idle: 8                                               # 连接池中的最大空闲连接
+      min-idle: 0                                                # 连接池中的最小空闲连接
+    timeout: 0                                                 # 连接超时时间（毫秒）
+  session:
+    store-type: redis
+
+eureka:
+  client: #客服端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://132.232.137.183:8001/eureka
+  instance:
+        instance-id: collocationofdishes-provider-9002      #自定义服务器名称信息
+        prefer-ip-address: true                    #访问路径可以显示ip地址
+        ip-address: 132.232.187.203
+
+info:
+  app.name: collocationofdishes-provider
+  company.name: liugaoyang
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+

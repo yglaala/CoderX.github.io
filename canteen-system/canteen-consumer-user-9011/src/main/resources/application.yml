@@ -1,0 +1,47 @@
+server:
+  port: 9011
+
+  max-http-header-size: 80000000
+  jetty:
+    max-http-post-size: 800000000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://132.232.137.183:8001/eureka
+#    register-with-eureka: false
+  instance:
+          instance-id: user-consumer-9011      #自定义服务器名称信息
+          prefer-ip-address: true                    #访问路径可以显示ip地址
+          ip-address: 132.232.187.203
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMillMilliseconds: 12000
+
+spring:
+  application:
+    name: user-consumer
+
+  redis:
+      database: 0
+      host: 132.232.187.203 #192.168.0.125   #132.232.187.203
+      port: 6379
+      password: 123456
+      pool:
+        max-active: 8                                              # 连接池最大连接数
+        max-wait: -1
+        max-idle: 8                                               # 连接池中的最大空闲连接
+        min-idle: 0                                                # 连接池中的最小空闲连接
+      timeout: 0                                                 # 连接超时时间（毫秒）
+  session:
+    store-type: redis

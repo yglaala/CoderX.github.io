@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.DeptDao">
+    <resultMap id="deptMap" type="Dept">
+        <result property="dept_id" column="deptId"/>
+        <result property="empNumberId" column="deptName"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="deptMap">
+        SELECT * FROM tb_dept WHERE dept_id=#{deptId}
+    </select>
+</mapper>
+
+

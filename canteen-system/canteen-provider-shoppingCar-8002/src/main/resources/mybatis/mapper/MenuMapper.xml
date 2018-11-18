@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.MenuDao">
+    <resultMap id="menuMap" type="Menu">
+        <result property="menuId" column="menu_id"/>
+        <result property="menuNo" column="menu_no"/>
+        <result property="menuPrice" column="menu_price"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="menuPicPath" column="menu_pic_path"/>
+        <association property="shop" column="shop_id" select="com.bmsoft.canteensystem.dao.ShopDao.findById"/>
+        <association property="menuPropertiesStyle" column="menu_properties_style_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesStyleDao.findById"/>
+        <association property="menuPropertiesCategory" column="menu_properties_category_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesCategoryDao.findById"/>
+        <association property="menuPropertiesTaste" column="menu_properties_taste_id" select="com.bmsoft.canteensystem.dao.MenuPropertiesTasteDao.findById"/>
+    </resultMap>
+    
+    <select id="findById" parameterType="Integer" resultMap="menuMap">
+        SELECT * FROM tb_menu WHERE menu_id=#{menuId} ORDER BY shop_id DESC
+    </select>
+</mapper>
+
+

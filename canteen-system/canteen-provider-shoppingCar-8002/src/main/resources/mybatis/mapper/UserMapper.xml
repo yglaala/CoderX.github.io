@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.UserDao">
+    <resultMap id="uesrMap" type="User">
+        <result property="userId" column="user_id"/>
+        <result property="userPwd" column="user_pwd"/>
+        <result property="roleId" column="role_id"/>
+        <association property="emp" column="emp_no" select="com.bmsoft.canteensystem.dao.EmpDao.findById"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="uesrMap">
+        SELECT * FROM tb_user WHERE user_id=#{userId}
+    </select>
+</mapper>
+
+
