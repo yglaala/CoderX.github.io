@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>各部门消费统计</title>
+    <script th:src="@{/js/jquery-1.12.1.js}" type="text/javascript"></script>
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.js}" type="text/javascript"></script>
+    <script th:src="@{/js/deptcost.js}" type="text/javascript"></script>
+    <script th:src="@{/js/json2.js}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.css}"/>
+</head>
+<body>
+
+<div style="height:20px" class="col-md-1"></div>
+<select id="year" onchange="show()"></select>年
+<select id="month" onchange="showDay()"></select>月
+<select id="day"></select>日
+<input type="button" value="查询" id="sbtn" style="margin-left:50px">
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row-fluid">
+        <div class="span12">
+            <h4 id="datetime" align="center"></h4>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="col-md-1 "></div>
+        <div class="col-md-10 ">
+            <table class="table table-striped" id="table">
+            </table>
+            <div id="btns"></div>
+        </div>
+        <div class=" col-md-1"></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var date0 = "";
+
+    function getResult(date) {
+        $.post("listcost0", {"date": date}, function (data) {
+            document.getElementById("datetime").innerHTML = data.date;
+            var target = data.deptCostList;
+            if (target != null && target.length > 0) {
+                var content = "<tr><td>部门</td><td>订单数量</td><td>总消费</td></tr>";
+                for (var i in target) {
+                    content += "<tr><td>" + target[i].name + "</td><td>" + target[i].orderNums + "</td>" +
+                        "<td>" + target[i].totalCost + "</td></tr>"
+                }
+                $("#table").append(content);
+                var btn = "<button id='downbtn' onclick='downToXls()'>导出</button>"
+                $("#btns").append(btn);
+            }
+        }, "json")
+
+    }
+
+    $("#sbtn").click(function () {
+        $("#table").empty();
+        $("#btns").empty();
+        date0 = query();
+        /*alert(query())*/
+        getResult(query())
+    })
+
+    function downToXls() {
+        /*alert(date0);*/
+        window.location = "downtoxls?date=" + date0 + "";
+        /*$.get("/emp/menu/order/downtoxls",{"date":date0},
+            function (data) {
+
+        },"json")*/
+    }
+</script>
+</html>

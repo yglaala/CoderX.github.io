@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>菜品列表</title>
+        <script th:src="@{/js/jquery-1.12.1.js}" type="text/javascript"></script>
+        <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.js}" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.css}"/>
+        <style>
+        </style>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <h1 align="center">菜单</h1>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-1 "></div>
+                <div class="col-md-10 ">
+                    <table class="table table-striped" id="table">
+                    </table>
+                </div>
+                <div class=" col-md-1"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+        window.onload = function () {
+            load();
+        }
+
+        function load() {
+            $.post("getMenus",{},function (data) {
+                if(data != null && data.length > 0){
+                    var content = "<tr><td>id</td><td>菜名</td><td>价格</td><td align='center' colspan='2'>操作</td> </tr>";
+                    for(var i in data){
+                        content += "<tr><td>"+data[i].id+"</td>" +
+                            "<td style='cursor: pointer' onclick='detailsMenu("+data[i].id+")'>"+data[i].name+"</td>" +
+                            "<td>"+data[i].price+"</td>" +
+                            "<td class='updateTd' id='"+data[i].id+"' style='cursor: pointer' onclick='updateMenu("+data[i].id+")'>修改</td>" +
+                            "<td style='cursor: pointer' onclick='deleteMenu("+data[i].id+")'>删除 </td></tr>"
+                    }
+                    $("#table").append(content);
+                }
+            },"json")
+        }
+        
+        function updateMenu(id) {
+            window.location = "update/"+id+"";
+        }
+        
+        function detailsMenu(id) {
+            window.location = "details/"+id+"";
+        }
+        
+        function deleteMenu(id) {
+            if(confirm("你确认删除吗")){
+                $.post("delete",{"id":id},
+                function (data) {
+                    if(data.code == 100){
+                        deleteNode();
+                        load();
+                        return;
+                    }
+                    alert(data.msg);
+                },"json");
+            }
+        }
+
+        function deleteNode() {
+            var tb = document.getElementById("table");
+            var rowNum=tb.rows.length;
+            for (var i=0;i<rowNum;i++)
+            {
+                tb.deleteRow(i);
+                rowNum=rowNum-1;
+                i=i-1;
+            }
+        }
+    </script>
+
+</html>

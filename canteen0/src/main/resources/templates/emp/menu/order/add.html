@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>选菜</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.1.js }"></script>
+    <script type="text/javascript" th:src="@{/js/json2.js }"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.css }"/>
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css}">
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<form>
+    <div class="form-group">
+        <label class="col-md-1 control-label">选择日期</label>
+        <div class="col-md-11">
+            <select name="date" id="date" class="form-control" style="width:25%">
+            </select>
+        </div>
+    </div>
+    <div class="checkbox" id="checkboxDiv" class="form-control" class='col-md-12'>
+
+    </div>
+    <div class='col-md-12'>
+        <input type="button" name="sub" id="sbtn" value="提交" style="margin-top: 20px">
+    </div>
+</form>
+</body>
+
+<script type="text/javascript">
+    window.onload = function () {
+
+        load();
+    }
+    function load() {
+
+        //获取所有的菜品
+        $.post('../getMenus', {},
+            function (data) {
+                var content = "";
+                if (data != null && data.length > 0) {
+                    for (var i in data) {
+                        content += "<div class='col-md-3'>"
+                        content += "<div style='height: 160px'><img class='img-rounded' src=" + data[i].path + " style='max-height: 150px ;max-width:80%'></div>";
+                        content += "<label>" + data[i].name + "</label> " +
+                            "<label>售价：" + data[i].price + "</label>";
+                        content += "<div col-md-12><button type='button' class='btn-info' onclick='add(" + data[i].id + ")'>+</button><button type='button' class='btn-info' onclick='sub1(" + data[i].id + ")'>-</button>" +
+                            "&emsp;&emsp;<label class='control-label' id = "+data[i].id+">0</label></div>";
+                        content += "</div>";
+                    }
+                }
+                $("#checkboxDiv").append(content);
+            }, "json")
+        //获取可用的时间
+        $.post("getTimes", {}, function (data) {
+            if (data != null && data.length > 0) {
+                var content = "<option selected='selected' value=" + data[0] + ">" + data[0] + "</option>";
+                for (var i = 1; i < data.length; i++) {
+                    content += "<option value=" + data[i] + ">" + data[i] + "</option>";
+                }
+
+            }
+            $("#date").append(content);
+        })
+    }
+
+    var result = {};
+    function add(id){
+        var num = document.getElementById(id).innerHTML;
+        result[id] = ++num;
+        document.getElementById(id).innerHTML = num;
+    }
+
+    function sub1(id){
+        var num = document.getElementById(id).innerHTML;
+        if(num > 0 ){
+            result[id] = --num;
+        }
+        document.getElementById(id).innerHTML = num;
+    }
+
+
+    $("#sbtn").click(function () {
+        var flag = false;
+        for(let key in result){
+           if(result[key] != 0 && undefined != result[key] && result[key] != null){
+                flag = true;
+           }
+        }
+        if(!flag){
+            alert("至少选择一种菜");
+            return;
+        }
+        if(confirm("确认提交吗？")){
+            $.post("insert",{"idnums":JSON.stringify(result)
+                ,"date":$("#date").val()},function (data) {
+                alert(data.msg);
+            },"json");
+        }
+    });
+
+</script>
+</html>

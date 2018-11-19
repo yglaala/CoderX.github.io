@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <title>添加/修改菜品</title>
+    <script th:src="@{/js/jquery-1.12.1.js }"></script>
+
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.min.css }">
+    <link rel="stylesheet" th:href="@{bootstrap-3.3.5-dist/css/bootstrap-theme.min.css }">
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.min.js }"></script>
+    <body>
+        <div class="container">
+            <h1 class="text-center text-danger">添加菜品</h1>
+            <form id="myform" action = "insert" enctype="multipart/form-data" method="post">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-label">菜品名称：</label>
+                    <div class="col-md-10">
+                        <input class="form-control" name="name" type="text" id="name"/>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-label">菜品图片：</label>
+                    <div class="col-md-10">
+                        <input class="form-control "name="uploadPic" type="file" id="uploadPic"/>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-label">菜品价格：</label>
+                    <div class="col-md-10">
+                        <input class="form-control" name="price" id="price" type="text"/>
+                    </div>
+                </div>
+
+                <input type="hidden" name="id" id="inputId" value="0"/>
+                <div class="form-group col-md-12">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="button" id="sbtn" class="btn btn-primary btn-sm">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script type="text/javascript" th:src="@{/js/jqueryForm.js }"></script>
+    <script type="text/javascript" th:src="@{/js/validate_ygl.js}"></script>
+    <script>
+        $("#sbtn").click(function () {
+                if(!testFloat($("#price").val())){
+                    return;
+                }
+                $("#myform").ajaxForm({
+                    success:function (data) {
+                        if(data.code == 200){
+                            window.location = "list"
+                        }
+                    }
+                })
+                $("#myform").submit();
+            });
+    </script>
+    <script th:inline="javascript">
+        window.onload = function () {
+            var id = [[${id}]];
+            if(id != null && undefined != id){
+                document.getElementById("inputId").value = id;
+                $.get("../getdetails/"+id+"",{},
+                    function (data) {
+                        alert(data)
+
+                        document.getElementById("name").value = data.name;
+                        document.getElementById("price").value = data.price;
+                    },"json")
+            }
+        }
+    </script>
+</html>

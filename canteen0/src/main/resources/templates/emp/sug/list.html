@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>建议列表</title>
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css}">
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.min.js}"></script>
+</head>
+<body id = "body">
+<div class="page-header">
+    <h2>
+        建议列表
+    </h2>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.1.js}"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        $.post("getSugs",{},function (data) {
+            if(data != null && data.length > 0){
+                var content = "";
+                for(var i in data){
+                    content += "<div style='margin-top: 20px'></div>" +
+                        "<div class='panel panel-default'>" +
+                        "<div class='panel-heading'>" +
+                        "        "+data[i].emp.name+"" +
+                        "</div>" +
+                        "<div class='panel-body'>" +
+                        "        "+data[i].sug+"" +
+                        "</div>" +
+                        "<div class='panel-footer'>" +
+                        "     "+data[i].createdate+"" +
+                        "</div>" +
+                        "</div>"
+                }
+                $("#body").append(content);
+            }
+        },"json")
+    }
+</script>
+</html>

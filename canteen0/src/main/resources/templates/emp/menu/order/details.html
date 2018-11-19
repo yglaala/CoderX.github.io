@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查看详情</title>
+    <script th:src="@{/js/jquery-1.12.1.js}" type="text/javascript"></script>
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.js}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.css}"/>
+    <style type="text/css">
+        .butn {
+            margin-left: 10%;
+        }
+    </style>
+</head>
+<body id="body">
+</body>
+<script th:src="@{/js/jquery-1.12.1.js }"></script>
+<script th:inline="javascript">
+
+    var orderno = [[${orderno}]];
+    var roleId = [[${session.emp.role.id}]];
+
+    window.onload = function () {
+        load();
+    }
+
+    function load() {
+        $.post("../details", {"orderno": orderno},
+            function (data) {
+                if (data != null) {
+                    var totalprice = 0;
+                    var names = "";
+                    for (var j in data.orderMenus) {
+                        names += data.orderMenus[j].menu.name + "  单价" + data.orderMenus[j].price + "*数量" + data.orderMenus[j].num + ",";
+                        totalprice += data.orderMenus[j].price * data.orderMenus[j].num;
+                    }
+                    names = names.substring(0, names.length - 1);
+                    var content = " <div class='container'>" +
+                        "            <h1>订单详情</h1>" +
+                        "            <table class='table table-striped'>" +
+                        "                <tr>" +
+                        "                    <td>订单号</td>" +
+                        "                    <td>" + data.orderno + "</td>" +
+                        "                </tr>" +
+                        "                <tr>" +
+                        "                    <td>订单菜品</td><td>" + names + "</td>" +
+                        "                </tr>" +
+                        "                <tr>" +
+                        "                    <td>订单总价</td><td>" + totalprice + "</td>" +
+                        "                </tr>" +
+                        "                <tr>" +
+                        "                    <td>订餐人</td>" +
+                        "                    <td>" + data.emp.name + "</td>" +
+                        "                </tr>" +
+                        "                <tr>" +
+                        "                    <td>订单状态</td>" +
+                        "                    <td>" + (roleId == 1 ? data.status1.name : data.status2.name) + "</td>" +
+                        "                </tr>" +
+                        "                <tr>" +
+                        "                <tr>" +
+                        "                    <td>"+(data.cost == 1 ? "消费时间" : "订单时间")+"</td>" +
+                        "                    <td>" + (data.cost == 1? data.costdate.substring(0, data.costdate.length-2):data.orderdate.substring(0, 10)) + "</td>" +
+                        "                </tr>" +
+                        "                <tr>" +
+                        "                    <td>创建时间</td>" +
+                        "                    <td>" + data.createdate.substring(0, data.createdate.length - 2) + "</td>" +
+                        "                </tr>" +
+                        "            </table>" +
+                        "        </div>"
+                    if (roleId == 1) {
+                        if (data.status1.id == 1) {
+                            content += "<div style='margin-top: 10px'></div>"
+                            content += "<div class='col-md-3'></div><button class='btn btn-primary btn-block' style='width:50%' type='button' onclick='updateOrder(2)'>确认消费</button>"
+                            content += "<div style='margin-top: 10px'></div>"
+                            content += "<div class='col-md-3'></div><button class='btn btn-primary btn-block' style='width:50%' type='button' onclick='updateOrder(4)'>取消订单</button>"
+                        }
+                        if (data.status1.id >= 2 && data.status1.id <= 4) {
+                            content += "<div style='margin-top: 10px'></div>"
+                            content += "<div class='col-md-3'></div><button class='btn btn-primary btn-block' style='width:50%' type='button' id = 'delBtn' onclick='deleteOrder(1)'>删除订单</button>"
+                        }
+                    }
+                    else {
+                        if (data.status2.id == 1) {
+                            content += "<div style='margin-top: 10px'></div>"
+                            content += "<div class='col-md-3'></div><button class='btn btn-primary btn-block' style='width:50%' type='button' onclick='updateOrder(3)'>取消订单</button>"
+                        }
+                        if (data.status2.id >= 2 && data.status2.id <= 4) {
+                            content += "<div style='margin-top: 10px'></div>"
+                            content += "<div class='col-md-3'></div><button class='btn btn-primary btn-block' style='width:50%' type='button' id = 'delBtn' onclick='deleteOrder(2)'>删除订单</button>"
+                        }
+                    }
+
+                    $("#body").append(content);
+                }
+            }, "json")
+    }
+
+    function updateOrder(statusId) {
+        if(!confirm("确认继续吗？")){
+            return;
+        }
+        $.get("../updateStatus/" + orderno + "/" + statusId + "", {}, function (data) {
+            if (data.code == 200) {
+                $("#body").empty();
+                load();
+                return;
+            }
+            alert(data.msg)
+        }, "json")
+    }
+
+    function deleteOrder(code) {
+        if(!confirm("确认删除吗？")){
+            return;
+        }
+        $.post("../delStatus/" + orderno + "/" + code + "", {}, function (data) {
+            if (data.code == 200) {
+                if(roleId == 1){
+                    window.location = "../getOrders";
+                    return;
+                }else {
+                    window.location = "../getOrdersemp";
+                    return;
+                }
+            }
+            alert(data.msg)
+        }, "json")
+    }
+</script>
+</html>

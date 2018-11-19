@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>导航栏</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            font-family: "Microsoft Yahei", Verdana, Arial, Helvetica, sans-serif
+        }
+
+        .leftMenu {
+            min-width: 220px;
+            width: 268px;
+            margin: 40px auto 0 auto;
+        }
+
+        .menu {
+            border: #bdd7f2 1px solid;
+            border-top: #0080c4 4px solid;
+            border-bottom: #0080c4 4px solid;
+            background: #f4f9ff repeat-y right;
+            margin-left: 10px;
+        }
+
+        .menu .ListTitle {
+            border-bottom: 1px #98c9ee solid;
+            display: block;
+            text-align: center;
+            height: 38px;
+            line-height: 38px;
+            cursor: pointer;
+
+        + width: 100 %;
+        }
+
+        .ListTitlePanel {
+            position: relative;
+        }
+
+        .leftbgbt {
+            position: absolute;
+            background: no-repeat;
+            width: 11px;
+            height: 52px;
+            left: -11px;
+            top: -4px;
+        }
+
+        .leftbgbt2 {
+            position: absolute;
+            background: no-repeat;
+            width: 11px;
+            height: 48px;
+            left: -11px;
+            top: -1px;
+        }
+
+        .menuList {
+            display: block;
+            height: auto;
+        }
+
+        .menuList div {
+            height: 28px;
+            line-height: 24px;
+            border-bottom: 1px #98c9ee dotted;
+        }
+
+        .menuList div a {
+            display: block;
+            background: #fff;
+            line-height: 28px;
+            height: 28px;
+            text-align: center;
+            color: #185697;
+            text-decoration: none;
+        }
+
+        .menuList div a:hover {
+            color: #f30;
+            background: #0080c4;
+            color: #fff;
+        }
+    </style>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.1.js }"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            create();
+            var menuParent = $('.menu > .ListTitlePanel > div');//获取menu下的父层的DIV
+            var menuList = $('.menuList');
+            $('.menu > .menuParent > .ListTitlePanel > .ListTitle').each(function (i) {//获取列表的大标题并遍历
+                $(this).click(function () {
+                    /*alert("click")*/
+                    if ($(menuList[i]).css('display') == 'none') {
+
+                        $(menuList[i]).slideDown(300);
+                    }
+                    else {
+                        $(menuList[i]).slideUp(300);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="leftMenu">
+    <div class="menu">
+        <div class='menuParent' id="menu1">
+        </div>
+        <div class="menuParent">
+            <div class="ListTitlePanel">
+                <div class="ListTitle">
+                    <strong>菜品建议管理</strong>
+                    <div class="leftbgbt2"></div>
+                </div>
+            </div>
+            <div class='menuList' id="menu2">
+            </div>
+        </div>
+        <div class='menuParent'>
+            <div class="ListTitlePanel">
+                <div class="ListTitle">
+                    <strong>菜品搭配管理</strong>
+                    <div class="leftbgbt2"></div>
+                </div>
+            </div>
+            <div class="menuList" id="menu3">
+            </div>
+        </div>
+        <div class='menuParent'>
+            <div class="ListTitlePanel">
+                <div class="ListTitle">
+                    <strong>订餐管理</strong>
+                    <div class="leftbgbt2"></div>
+                </div>
+            </div>
+            <div class="menuList" id="menu4">
+            </div>
+        </div>
+        <div class='menuParent'>
+            <div class="ListTitlePanel">
+                <div class="ListTitle">
+                    <strong>权限管理</strong>
+                    <div class="leftbgbt2"></div>
+                </div>
+            </div>
+            <div class="menuList">
+                <div>
+                    <a href="permission/add">添加权限</a>
+                    <a href="permission/list">查看权限</a>
+                    <a href="permission/distribution">权限分配</a>
+                    <a href="permission/checkdistribution">查看权限分配</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center;">
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    function create() {
+        var roldId = [[${session.emp.role.id}]];
+        /*alert(roldId)*/
+
+        var content1 = "";
+        var content2 = "";
+        var content3 = "";
+        var content4 = "";
+        if (roldId == 1) {
+            content1 = "<div class='ListTitlePanel'>" +
+                "           <div class='ListTitle'>" +
+                "               <strong>菜品管理</strong>" +
+                "               <div class='leftbgbt'></div>" +
+                "           </div>" +
+                "       </div>" +
+                "       <div class='menuList'>" +
+                "           <div><a href='menu/add' target='mainAction'>添加菜品</a></div>" +
+                "           <div><a href='menu/list' target='mainAction'>查看菜品</a></div>" +
+                "        </div></div>"
+            content2 = "<div><a href='sug/list' target='mainAction'>查看建议</a></div>"
+            content3 = "<div><a href='sf/add' target='mainAction'>菜品搭配</a></div>"
+            content4 = "<div><a href='menu/order/getOrders' target='mainAction'>订餐信息查看</a></div>" +
+                        "<div><a href='menu/order/listcost' target='mainAction'>各部门消费统计</a></div>"
+        } else {
+            content2 = "<div><a href='sug/add' target='mainAction'>添加建议</a></div>"
+            content3 = "<div><a href='sf/getDay' target='mainAction'>查看今日菜品</a></div>" +
+                "<div><a href='sf/getWeek' target='mainAction'>查看本周菜品信息</a></div>"
+            content4 = "<div><a href='menu/order/add' target='mainAction'>订餐</a></div>" +
+                "       <div><a href='menu/order/listcostemp' target='mainAction'>消费情况查询</a></div>" +
+                "       <div><a href='menu/order/getOrdersemp' target='mainAction'>查看订单凭证</a></div>"
+        }
+
+        $("#menu1").append(content1);
+        $("#menu2").append(content2);
+        $("#menu3").append(content3);
+        $("#menu4").append(content4);
+    }
+
+</script>
+</html>

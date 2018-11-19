@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账单详情</title>
+    <script th:src="@{/js/jquery-1.12.1.js}" type="text/javascript"></script>
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.js}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <h1 align="center">消费明细</h1>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="col-md-1 "></div>
+        <div class="col-md-10 ">
+            <table class="table table-striped" id="table">
+            </table>
+        </div>
+        <div class=" col-md-1"></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        $.post("listcostemp", {}, function (data) {
+            if (data != null && data.length > 0) {
+                var content = "<tr><td>日期</td><td>单号</td><td>商品明细</td><td>金额</td></tr>";
+                for (var i in data) {
+                    var totalprice = 0;
+                    var names = "";
+                    for (var j in data[i].orderMenus) {
+                        names += " " + data[i].orderMenus[j].menu.name + "(￥" + data[i].orderMenus[j].price + ")*" + data[i].orderMenus[j].num;
+                        totalprice += data[i].orderMenus[j].price * data[i].orderMenus[j].num;
+                    }
+                    content += "<tr><td>" + data[i].createdate.substring(0, 10) + "</td>" +
+                        "<td>" + data[i].orderno + "</td>" +
+                        "<td>" + names + "</td>" +
+                        "<td>￥" + totalprice + "</td></tr>"
+                }
+                $("#table").append(content);
+            }
+        }, "json")
+    }
+</script>
+</html>

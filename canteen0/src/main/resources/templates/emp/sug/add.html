@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加建议</title>
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css}">
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="form-group" style="margin-top: 20px">
+    <span> 建议</span>
+    <div style="margin-top: 20px"></div>
+    <textarea class="form-control" rows="10" name="sug" id="sug"></textarea>
+</div>
+<button type="submit" id="sbtn" style="text-laign:left">提交</button>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.1.js}"></script>
+<script type="text/javascript">
+    $("#sbtn").click(function () {
+        var sug = $("#sug").val();
+        $.post("insert",{"sug":sug},function (data) {
+            alert(data.msg);
+        },"json")
+    })
+</script>
+</html>

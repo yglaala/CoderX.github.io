@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>选菜</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.1.js }"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.css }"/>
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css}">
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <form action = "insert" method="post"  id = "myform">
+        <div class="form-group">
+            <label class="col-md-1 control-label">选择日期</label>
+            <div class="col-md-11">
+                <input type="date" name="date" id="date" class="form-control" style="width:25%">
+            </div>
+        </div>
+        <div class="checkbox" id="checkboxDiv" class='col-md-12'>
+
+        </div>
+        <div class='col-md-12'>
+            <input type="button" name="sub" id="sbtn" value="提交" style="margin-top: 20px">
+        </div>
+    </form>
+</body>
+
+<script type="text/javascript" th:src="@{/js/jqueryForm.js }"></script>
+<script type="text/javascript">
+    window.onload = function () {
+
+        load(null);
+    }
+
+    function load(date){
+        $.post('getDateCanChooseMenu', {date: date},
+            function (data) {
+                var content = "";
+                if (data != null && data.length > 0) {
+                    for (var i in data) {
+                        content += "<div class='col-md-3'>"
+                        content += "<div style='height: 160px'><img class='img-rounded' src=" + data[i].path + " style='max-height: 150px ;max-width:80%'></div>";
+                        content += "<input type='checkbox' name='menu' value=" + data[i].id + "><label>" + data[i].name + "</label> ";
+                        content += "</div>";
+                    }
+                }
+                $("#checkboxDiv").append(content);
+            }, "json")
+    }
+
+    $("#date").change(function () {
+        $("#checkboxDiv").empty();
+        load($("#date").val());
+    })
+
+    $("#sbtn").click(function () {
+        $("#myform").ajaxForm({
+            success:function (data) {
+
+                if(data.code == 200){
+                    $("#checkboxDiv").empty();
+                    load($("#date").val());
+                }
+                alert(data.msg)
+            }
+        })
+        $("#myform").submit();
+    });
+
+</script>
+</html>
