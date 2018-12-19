@@ -1,0 +1,7 @@
+com\bmsoft\canteensystem\fallback\MyFallback.class
+com\bmsoft\canteensystem\filter\ErrorFilter.class
+com\bmsoft\canteensystem\filter\LoginFilter.class
+com\bmsoft\canteensystem\filter\PostFilter.class
+com\bmsoft\canteensystem\Zuul15000_App.class
+com\bmsoft\canteensystem\cfgbeans\MyConfig.class
+com\bmsoft\canteensystem\fallback\MyFallback$1.class

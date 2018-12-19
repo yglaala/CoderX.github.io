@@ -26,6 +26,6 @@ public interface MenuSaleMapper {
             " FROM tb_menu JOIN tb_menu_sale ON tb_menu.menu_id = tb_menu_sale.menu_id WHERE" +
             " tb_menu_sale.menu_sale_date BETWEEN #{start} AND #{end} GROUP BY tb_menu.menu_id" +
             " ) menu_sale ON shop_menu.menu_id = menu_sale.menu_id")
-    List<MenuSaleDto> getMenuSaleByParams(Map<String, Object> params);
+    List<MenuSaleDto> getMenuSaleByParams(Map<String,Object> params);
 
 }

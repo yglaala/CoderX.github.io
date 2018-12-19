@@ -9,5 +9,5 @@ import java.util.Map;
 public interface ShoppingCarMapper {
 
     @Select("delete from tb_shopping_car where match_menu_id = #{matchMenuId} and user_id = #{userId}")
-    Integer deleteShopCarByMatchId(Map<String, Object> params);
+    Integer deleteShopCarByMatchId(Map<String,Object> params);
 }

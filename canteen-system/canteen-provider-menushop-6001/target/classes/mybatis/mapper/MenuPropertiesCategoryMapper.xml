@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.MenuPropertiesCategoryDao">
+
+    <resultMap id="MenuPropertiesCategoryMap" type="MenuPropertiesCategory">
+        <id property="menuPropertiesCategoryId" column="menu_properties_category_id"></id>
+        <result property="menuPropertiesCategoryName" column="menu_properties_category_name"></result>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="MenuPropertiesCategoryMap">
+         select * from tb_menu_properties_category where menu_properties_category_id=#{menu_properties_category_id}
+    </select>
+
+    <select id="findAllMenuPropertiesCategoryId" resultMap="MenuPropertiesCategoryMap">
+        SELECT  * FROM tb_menu_properties_category
+    </select>
+
+</mapper>
+ 
+

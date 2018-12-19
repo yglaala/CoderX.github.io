@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bmsoft.canteensystem.dao.MenuPropertiesTasteDao">
+
+    <resultMap id="MenuPropertiesTasteMap" type="MenuPropertiesTaste">
+        <id property="menuPropertiesTasteId" column="menu_properties_taste_id"></id>
+        <result property="menuPropertiesTasteName" column="menu_properties_taste_name"></result>
+
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="MenuPropertiesTasteMap">
+        select * from tb_menu_properties_taste t where t.menu_properties_taste_id=#{menu_properties_taste_id}
+    </select>
+
+    <select id="findAllMenuPropertiesTasteId" resultMap="MenuPropertiesTasteMap">
+         SELECT * FROM tb_menu_properties_taste
+    </select>
+
+</mapper>
+ 
+

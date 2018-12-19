@@ -5,18 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
-
-/**
- * @Author liugaoyang
- * @Date 2018/10/21 21:02
- */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Accessors(chain = true)
-public class MatchMenuInfoDto {
+public class OrderMenuDto {
+
     private Integer menuId;
-    private Date matchMenuDate;
-    private String matchMenuTime;
+    private String menuName;
+    private Float menuPrice;
+    private Integer menuNum;
 }

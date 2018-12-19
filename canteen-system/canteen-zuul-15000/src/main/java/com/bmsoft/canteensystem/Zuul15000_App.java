@@ -6,9 +6,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-/**
- * @author guoguo
- */
 @SpringBootApplication
 @EnableEurekaClient
 @EnableZuulProxy

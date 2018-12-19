@@ -164,6 +164,7 @@ public class DateUtil {
     }
    public static void main(String[] args) {
        //System.out.println(getPerDate(2,"2018-10-28 1:10:25"));
-       System.out.println(getPerTime(2,"13:10:25"));
+       System.out.println(getFirstDayOfMonth());
+       System.out.println(getLastDayOfMonth());
    }
 }

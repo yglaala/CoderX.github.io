@@ -58,12 +58,37 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+<<<<<<< HEAD:canteen-provider-order-7001/pom.xml
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+      <!--  <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;spring session 与redis应用基本环境配置,需要开启redis后才可以使用，不然启动Spring boot会报错 &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.session</groupId>-->
+            <!--<artifactId>spring-session-data-redis</artifactId>-->
+        <!--</dependency>-->
+        <!-- 修改后立即生效，热部署 -->
+=======
         <!--actuator监控信息的完善-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+>>>>>>> origin/master:canteen-provider-user-9001/pom.xml
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>springloaded</artifactId>
@@ -82,10 +107,39 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.3</version>
+        </dependency>
     </dependencies>
 
     <build>
+<<<<<<< HEAD:canteen-provider-order-7001/pom.xml
+        <finalName>canteen-provider-order-7001</finalName>
+=======
         <finalName>canteen-provider-user-9001</finalName>
+>>>>>>> origin/master:canteen-provider-user-9001/pom.xml
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

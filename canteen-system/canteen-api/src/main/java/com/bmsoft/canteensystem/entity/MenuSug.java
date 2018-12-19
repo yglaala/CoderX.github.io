@@ -1,4 +1,4 @@
-﻿package com.bmsoft.canteensystem.entity;
+package com.bmsoft.canteensystem.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class MenuSug  implements Serializable {
 
-     private String orderNo;
+    private String orderNo;
     private Integer menuSugId;//菜品评价id
     private User user;//用户id
     private Menu menu;//菜品id

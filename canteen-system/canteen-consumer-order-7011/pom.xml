@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>canteen-consumer-order-7011</artifactId>
+    <artifactId>canteen-consumer-shoppingCar-8003</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.bmsoft.canteensystem</groupId>

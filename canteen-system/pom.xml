@@ -110,17 +110,17 @@
     </build>
     <modules>
         <module>canteen-api</module>
-        <module>canteen-eureka-8001</module>
-        <module>canteen-provider-user-9001</module>
-        <module>canteen-consumer-user-9011</module>
-        <module>canteen-provider-shoppingCar-8002</module>
-        <module>canteen-consumer-shoppingCar-8003</module>
-        <module>canteen-provider-sug-8004</module>
-        <module>canteen-provider-collocationofdishes-9002</module>
-        <module>canteen-consumer-collocationofdishes-9012</module>
-        <module>canteen-consumer-sug-8005</module>
-        <module>cateen-pic-1000</module>
-        <module>canteen-provider-menushop-6001</module>
-        <module>canteen-consumer-menushop-6002</module>
+        <!--<module>canteen-eureka-8001</module>-->
+        <!--<module>canteen-provider-user-9001</module>-->
+        <!--<module>canteen-consumer-user-9011</module>-->
+        <!--<module>canteen-provider-shoppingCar-8002</module>-->
+        <!--<module>canteen-provider-sug-8004</module>-->
+        <!--<module>canteen-provider-collocationofdishes-9002</module>-->
+        <!--<module>canteen-consumer-collocationofdishes-9012</module>-->
+        <!--<module>canteen-consumer-sug-8005</module>-->
+        <!--<module>cateen-pic-1000</module>-->
+        <!--<module>canteen-provider-menushop-6001</module>-->
+        <!--<module>canteen-consumer-menushop-6002</module>-->
+        <module>canteen-provider-order-7001</module>
     </modules>
 </project>

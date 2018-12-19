@@ -11,7 +11,7 @@ import java.util.Map;
 public interface MatchMenuMapper {
 
     @UpdateProvider(type = MatchMenuMapperPovider.class , method = "updateMatchMenuTime")
-    int updateMatchMenuTime(Map<String, Object> params);
+    int updateMatchMenuTime(Map<String,Object> params);
 
     @Select("SELECT tb_shop.*,tb_menu.menu_name,tb_match_menu.match_menu_date,tb_match_menu.match_menu_time" +
             " FROM tb_match_menu,tb_shop,tb_menu" +

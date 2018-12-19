@@ -57,7 +57,7 @@ public interface OrderMapper {
             @Result(property = "orderNo" , column = "order_no")
     })
     @SelectProvider(type = OrderMapperProvider.class , method = "getOrders")
-    List<OrderDto> getOrders(Map<String, Object> params);
+    List<OrderDto> getOrders(Map<String,Object> params);
 
     /*@Results({
             @Result(property = "menuSugs" , column = "order_no" ,
@@ -109,7 +109,7 @@ public interface OrderMapper {
      * @return
      */
     @UpdateProvider(type = OrderMapperProvider.class , method ="UpdateOrderStatus")
-    Integer updateOrderStatus(Map<String, Object> params);
+    Integer updateOrderStatus(Map<String,Object> params);
 
     /**
      * 订单取消，菜品回退

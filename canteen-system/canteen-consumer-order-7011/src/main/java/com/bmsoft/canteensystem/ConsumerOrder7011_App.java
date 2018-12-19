@@ -8,7 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
- * @author guoguo
+ * @author chengpeng
+ * @create 2018-10-18 19:15
  */
 @SpringBootApplication
 @EnableEurekaClient

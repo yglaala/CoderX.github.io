@@ -1,0 +1,43 @@
+server:
+  port: 6002
+  
+eureka:
+  client:
+   # register-with-eureka: false
+    service-url: 
+      defaultZone: http://132.232.137.183:8001/eureka/
+  instance:
+    instance-id: shop-menu-consumer-6002   #自定义服务名称
+    prefer-ip-address: true #访问路径可以显示IP地址
+    ip-address:  129.28.68.234 #绑定ip地址
+
+spring:
+   application:
+    name: shop-menu-consumer
+   redis:
+         database: 0
+         host: 132.232.187.203
+         port: 6379
+         password: 123456
+    # 连接池最大连接数
+         pool:
+           max-active: 8
+           max-wait: -1
+    # 连接池中的最大空闲连接
+           max-idle: 8
+    # 连接池中的最小空闲连接
+           min-idle: 0
+    # 连接超时时间（毫秒）
+         timeout: 0
+
+   session:
+      store-type: redis
+
+
+feign:
+   hystrix:
+      enable: true
+
+
+
+
